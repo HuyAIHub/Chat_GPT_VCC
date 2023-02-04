@@ -3,10 +3,7 @@ import openai
 import gradio as gr
 
 #if you have OpenAI API key as an environment variable, enable the below
-#openai.api_key = os.getenv("OPENAI_API_KEY")
-
-#if you have OpenAI API key as a string, enable the below
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
@@ -25,7 +22,7 @@ def openai_create(prompt):
     presence_penalty=0.6,
     stop=[" Human:", " AI:"]
     )
-
+    print('answer: /n'response['choices'][0]['text'])
     return response.choices[0].text
 
 
@@ -35,6 +32,7 @@ def chatgpt_clone(input, history):
     s = list(sum(history, ()))
     s.append(input)
     inp = ' '.join(s)
+    print('message:',inp)
     output = openai_create(inp)
     history.append((input, output))
     return history, history
